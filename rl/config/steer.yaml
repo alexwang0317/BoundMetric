@@ -1,0 +1,46 @@
+# Minimal, readable config that mirrors the left side of your diagram.
+
+experiment_name: "Gemma_9b_ReFT_Concept4"
+
+steered_model:
+  mode: "steering_vectors"           # ("steering_vectors", "rlseft")
+  batch_size: 32                     # process multiple questions in parallel
+  prompt_template: |
+    You are a helpful assistant. While answering, you should *naturally and prominently* include the concept "{concept}" in your response.
+    Be concise, correct, and keep the concept central to the explanation.
+  # Same HF model for sampling and scoring; "steered" is realized by prompt-prepending:
+  base_model_name: "google/gemma-2-9b-it"
+  enforce_eager: true                # Disable CUDA graphs (needed for Gemma 2 + Flash Attn compatibility)
+  # Note: TORCH_SDPA not supported in EasySteer's V1 engine - using default backend
+  # disable_flash_attn_v3: true
+  # attention_backend: "TORCH_SDPA"
+  gpu_memory_utilization: 0.95
+  tensor_parallel_size: 1            # Single GPU to avoid multi-process executor issues
+  max_model_len: 4096                # Reduce context length to fit in GPU memory
+  steer_vector_path: "/home/alexw/rlpractice/rl/vectors/LsReFT_weight.pt"
+  # steer_vector_path: "/nlp/scr/alexw17/EasySteer/vectors/happy_diffmean.gguf"
+  scale: 200.0
+  vector_index: 4                    # Index of the vector to use if .pt file contains multiple vectors
+  # algorithm: "mean"                  # Algorithm to use (e.g. "mean")
+  # target_layers: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
+  target_layers: [20]
+  prefill_trigger_tokens: [-1]
+  generate_trigger_tokens: [-1]
+
+data:
+  concept: "technical_specifications_related_to_audio_products_and_their_performance"
+  questions_jsonl: "/home/alexw/rlpractice/rl/data/data_30.json"
+
+  # The loader is forgiving and extracts the text accordingly.
+
+sampling:
+  iwae_samples: 16                 # K samples per question -> ordinarily up to 32
+  max_new_tokens: 256
+  temperature: 1
+  top_p: 0.95
+  enable_thinking: false           # forwarded to HFCausalLM.generate if supported
+  seed: 0
+
+output:
+  save_dir: "results/gemma-9b/lsReFT/concept_4/scale200.0"
+  save_rollouts_jsonl: true

@@ -1,0 +1,14 @@
+
+[info] >>> Starting rollout for concept: 'technical_specifications_related_to_audio_products_and_their_performance'
+[info] Loading model: google/gemma-2-9b-it
+
+[phase 1/3] Initializing vLLM + EasySteer model...
+            Model: google/gemma-2-9b-it
+            GPU memory utilization: 0.95
+            Max model len: 4096
+INFO 01-16 09:58:57 [utils.py:253] non-default args: {'max_model_len': 4096, 'gpu_memory_utilization': 0.95, 'disable_log_stats': True, 'enforce_eager': True, 'enable_steer_vector': True, 'enable_chunked_prefill': False, 'model': 'google/gemma-2-9b-it'}
+INFO 01-16 09:58:58 [model.py:514] Resolved architecture: Gemma2ForCausalLM
+INFO 01-16 09:58:58 [model.py:1661] Using max model len 4096
+WARNING 01-16 09:58:58 [arg_utils.py:1900] This model does not officially support disabling chunked prefill. Disabling this manually may cause the engine to crash or produce incorrect outputs.
+WARNING 01-16 09:58:58 [vllm.py:625] Enforce eager set, overriding optimization level to -O0
+INFO 01-16 09:58:58 [vllm.py:725] Cudagraph is disabled under eager mode

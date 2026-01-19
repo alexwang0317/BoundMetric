@@ -1,0 +1,41 @@
+experiment_name: Gemma_9b_ReFT_Concept2
+steered_model:
+  mode: steering_vectors
+  batch_size: 32
+  prompt_template: 'You are a helpful assistant. While answering, you should *naturally
+    and prominently* include the concept "{concept}" in your response.
+
+    Be concise, correct, and keep the concept central to the explanation.
+
+    '
+  base_model_name: google/gemma-2-9b-it
+  enforce_eager: true
+  gpu_memory_utilization: 0.95
+  tensor_parallel_size: 1
+  max_model_len: 4096
+  steer_vector_path: /home/alexw/rlpractice/rl/vectors/LsReFT_weight.pt
+  scale: 20.0
+  vector_index: 2
+  target_layers:
+  - 20
+  prefill_trigger_tokens:
+  - -1
+  generate_trigger_tokens:
+  - -1
+data:
+  concept: technical_specifications_related_to_audio_products_and_their_performance
+  questions_jsonl: /home/alexw/rlpractice/rl/data/data_30.json
+sampling:
+  iwae_samples: 16
+  max_new_tokens: 256
+  temperature: 1
+  top_p: 0.95
+  enable_thinking: false
+  seed: 0
+output:
+  save_dir: results/gemma-9b/lsReFT/concept_2/scale200.0/scale_20
+  save_rollouts_jsonl: true
+_resolved:
+  iwae_samples: 16
+  questions_path: /home/alexw/rlpractice/rl/data/data_30.json
+  output_dir: results/gemma-9b/lsReFT/concept_2/scale200.0/scale_20

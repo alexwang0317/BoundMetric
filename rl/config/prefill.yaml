@@ -1,0 +1,20 @@
+# Configuration for prefill log probability computation
+# This script computes unsteered model log probabilities for existing rollouts
+
+# Input data (output from steered.py or similar)
+input_rollouts_jsonl: "results/gemma-9b/concept_1/rollouts.jsonl"
+
+# Output directory for results
+output_dir: "results/gemma-9b/concept_1"
+
+# Model configuration
+model:
+  base_model_name: "google/gemma-2-9b-it"  # Required: HuggingFace model name
+  gpu_memory_utilization: 0.8                    # Optional: GPU memory utilization (default: 0.8)
+  tensor_parallel_size: null                     # Optional: Tensor parallel size
+  dtype: null                                   # Optional: Model dtype
+
+# Sampling configuration (optional)
+sampling:
+  enable_thinking: false  # Optional: Enable thinking mode in chat template (default: false)
+  seed: 42               # Optional: Random seed for reproducibility

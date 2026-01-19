@@ -1,0 +1,26 @@
+# Configuration for IWAE curve plotting from RolloutWithJudge data
+# This script takes the output from judge.py and creates IWAE curves and plots
+
+# Input data (output from judge.py)
+input_rollouts_jsonl: "results/gemma-9b/concept_1/rollouts_with_judge.jsonl"
+
+# Output directory for analysis results
+output_dir: "results/gemma-9b/concept_1"
+
+# Scoring configuration
+scoring:
+  # Judge scores are mapped to true scale values:
+  # 0 -> -100.0, 1 -> -50.0, 2 -> 0.0
+
+# Analysis parameters
+analysis:
+  ks: null  # K values to evaluate (null = use powers of 2)
+  resamples: 100  # Number of resamples for IWAE curve estimation
+  seed: 42  # Random seed for reproducibility
+
+# Output configuration
+output:
+  make_individual_plots: true  # Create individual IWAE plots for each rollout
+  make_ribbon_plot: true  # Create aggregate ribbon plot across all rollouts
+  save_individual_data: true  # Save individual rollout data as JSON
+  save_aggregate_data: true  # Save aggregate analysis data as JSON

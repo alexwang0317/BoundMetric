@@ -1,0 +1,11 @@
+input_rollouts_jsonl: "results/gemma-9b/concept_1/rollouts_with_unsteered.jsonl"
+output_dir: "results/gemma-9b/concept_1"
+
+judge:
+  model_path: "path/to/your/qwen-judge-lora-adapter"
+  gpu_memory_utilization: 0.7
+
+sampling:
+  temperature: 0.0
+  max_tokens: 256
+  top_p: 0.95
